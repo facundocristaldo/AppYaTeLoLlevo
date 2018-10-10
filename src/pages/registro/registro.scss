@@ -3,7 +3,7 @@ page-registro {
 }
 
 .headerTitle{
-    position: relative;
+    position: inherit;
     top: 10%;
     left: 50%;
     margin-left:-25%;
@@ -12,6 +12,7 @@ page-registro {
 
 .txtinput{
     margin: 5% 0 5% 0;
+    border:1px solid rgb(121, 117, 117);
 }
 
 label{

@@ -18,18 +18,16 @@
     <h3>YaTeLoLlevo.com</h3>
   </div>
   <div class="Container">
-    <div class="InicioForm">
+    <div id="RegisterForm" class="InicioForm">
       <form>
-        <input id="UserName" class="txtinput" type="text" placeholder="Usuario"  required/>
-        <input id="Name" class="txtinput" type="text" placeholder="Nombre"  required/>
-        <input id="Email" class="txtinput" type="text" placeholder="Email"  required/>
-        <input id="UserPass" class="txtinput" type="password" placeholder="Contraseña" required/>
-        <input id="UserPassConfirm" class="txtinput" type="password" placeholder="Confirme Contraseña" required/>
-        <button id="btnRegister" class="btnConfirm" type="submit" >Registrarse</button>
+        <input id="UserName" class="txtinput" type="text" placeholder="Usuario" required />
+        <input id="Name" class="txtinput" type="text" placeholder="Nombre" required />
+        <input id="Email" class="txtinput" type="text" placeholder="Email" required />
+        <input id="UserPass" class="txtinput" type="password" placeholder="Contraseña" required />
+        <input id="UserPassConfirm" class="txtinput" type="password" placeholder="Confirme Contraseña" required />
+        <button id="btnRegister" class="btnConfirm" type="submit" (click)="registerEvent()">Registrarse</button>
       </form>
-      <label>Ya tienes una cuenta?  <a (click)="gotoHome()">Iniciar Sesión</a></label>
+      <label>Ya tienes una cuenta? <a (click)="gotoHome()">Iniciar Sesión</a></label>
     </div>
   </div>
 </ion-content>
-
-
