@@ -13,15 +13,15 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="default-bg">
   <div class="outerbox">
     <div class="searchBar">
       <input id="searchText" type="text" placeholder="Buscar">
       <ion-icon id="searchBtn" name="search"></ion-icon>
     </div>
     <div id="AllProds">
-      <div class="divEmpresa" *ngFor="let prod of AllProds">
-        <img src="https://cdn0.iconfinder.com/data/icons/website-kit-2/512/icon_55-512.png" title="{{prod.nombre}}">
+      <div class="divEmpresa" *ngFor="let prod of AllProds" (click)="ViewDetails(prod)">
+        <img src="{{prod.img}}" title="{{prod.nombre}}">
         <label class="empName">{{prod.nombre}}</label>
       </div>
     </div>

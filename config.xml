@@ -82,5 +82,9 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
+    <plugin name="cordova-plugin-facebook4" spec="~3.1.0">
+        <variable name="APP_ID" value="1446002678864022" />
+        <variable name="APP_NAME" value="YaTeLoLlevo" />
+    </plugin>
     <engine name="android" spec="7.1.1" />
 </widget>

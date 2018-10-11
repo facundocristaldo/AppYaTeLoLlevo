@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { RegistroPage } from '../registro/registro';
 import { CatalogoEmpresasPage } from '../catalogo-empresas/catalogo-empresas';
 import * as $ from "jquery";
+// import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 
 
 @Component({
@@ -11,11 +12,19 @@ import * as $ from "jquery";
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController/*, private fb: Facebook*/) {
 
   }
 
+  socialSignIn(socialMedia: string) {
+    console.log("Clickeado inicio de sesion con red social: " + socialMedia);
+    // if (socialMedia = "facebook") {
+    //   this.fb.login(['public_profile', 'user_friends', 'email'])
+    //     .then((res: FacebookLoginResponse) => console.log('Logged into Facebook!', res))
+    //     .catch(e => console.log('Error logging into Facebook', e));
 
+    // }
+  }
 
   gotoRegister() {
     this.navCtrl.push(RegistroPage);

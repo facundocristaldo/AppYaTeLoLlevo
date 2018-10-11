@@ -9,6 +9,10 @@ import { HomePage } from '../pages/home/home';
 import { RegistroPage } from '../pages/registro/registro';
 import { CatalogoEmpresasPage } from '../pages/catalogo-empresas/catalogo-empresas';
 import { CatalogoProductosPage } from '../pages/catalogo-productos/catalogo-productos';
+import { ProductoDetallesPage } from '../pages/producto-detalles/producto-detalles';
+
+// import { Facebook } from '@ionic-native/facebook';
+
 
 @NgModule({
   declarations: [
@@ -16,7 +20,8 @@ import { CatalogoProductosPage } from '../pages/catalogo-productos/catalogo-prod
     HomePage,
     RegistroPage,
     CatalogoEmpresasPage,
-    CatalogoProductosPage
+    CatalogoProductosPage,
+    ProductoDetallesPage
   ],
   imports: [
     BrowserModule,
@@ -28,9 +33,11 @@ import { CatalogoProductosPage } from '../pages/catalogo-productos/catalogo-prod
     HomePage,
     RegistroPage,
     CatalogoEmpresasPage,
-    CatalogoProductosPage
+    CatalogoProductosPage,
+    ProductoDetallesPage
   ],
   providers: [
+    // Facebook,
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler }

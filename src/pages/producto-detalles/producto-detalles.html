@@ -1,0 +1,45 @@
+<!--
+  Generated template for the ProductoDetallesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{prod.nombre}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="default-bg">
+
+  <div id="producto-detalles">
+    <div class="prodphoto">
+      <img title="{{prod.nombre}}" src="{{prod.img}}">
+    </div>
+    <div class="ProdDetails">
+      <p id="titulo">{{prod.nombre}}</p>
+      <button id="agregarCarrito" type="button">Agregar al carrito</button>
+      <p id="precio">{{prod.moneda}} {{prod.precio}}</p>
+      <p id="dimensiones">Dimensiones: {{prod.dimensiones}}</p>
+      <p id="descripcion">Descripcion:<br /> {{prod.descripcion}}</p>
+
+    </div>
+
+    <div id="newComment">
+      <label>Comentar:</label>
+      <textarea id="commentContent"></textarea>
+      <button id="sendComment">Comentar</button>
+    </div>
+    <div id="comments">
+      <label>Comentarios de otros usuarios:</label>
+      <div class="comment">
+        <label class="commentUser">facundo</label>
+        <p class="commentContent">Comentario de facundo sobre elproducto cualquiera. la compra fue pesima y espero
+          poder cambiar este texto pronto</p>
+      </div>
+    </div>
+  </div>
+</ion-content>

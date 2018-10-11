@@ -1,0 +1,71 @@
+
+
+#producto-detalles{    
+
+    width: 75%;
+    position: absolute;
+    display: block;
+    left: 14%;
+    top: 5%;
+    text-align: left;
+}
+.prodphoto{
+    text-align: center
+}
+.prodphoto img{
+    height: 15pc;
+}
+
+.ProdDetails{
+
+}
+.ProdDetails #titulo{
+    font-size: x-large;
+}
+.ProdDetails #precio{
+    font-size: x-large
+}
+.ProdDetails #descripcion{
+    font-size: medium;
+}
+
+#agregarCarrito{
+    padding: 15px;
+    background-color: #38aa2e;
+    float: right;
+    margin-top:-10px;
+    font-weight: 300; 
+}
+
+#newComment{
+    position: relative;
+    height: 110px;
+}
+#newComment label{
+    font-size: small;
+}
+
+#newComment #commentContent{
+    width: 100%;
+    height: 65px;
+    padding: 5px;
+}
+#newComment #sendComment{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 7px;
+}
+
+#comments{
+
+}
+.comment{
+
+}
+.comment .commentUser{
+
+}
+.comment .commentContent{
+
+}
