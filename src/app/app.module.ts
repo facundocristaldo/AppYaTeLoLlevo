@@ -11,7 +11,7 @@ import { CatalogoEmpresasPage } from '../pages/catalogo-empresas/catalogo-empres
 import { CatalogoProductosPage } from '../pages/catalogo-productos/catalogo-productos';
 import { ProductoDetallesPage } from '../pages/producto-detalles/producto-detalles';
 
-// import { Facebook } from '@ionic-native/facebook';
+import { Facebook } from '@ionic-native/facebook';
 
 
 @NgModule({
@@ -37,7 +37,7 @@ import { ProductoDetallesPage } from '../pages/producto-detalles/producto-detall
     ProductoDetallesPage
   ],
   providers: [
-    // Facebook,
+   Facebook,
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
