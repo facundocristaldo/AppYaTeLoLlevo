@@ -3,10 +3,10 @@
     width: 75%;
     position: absolute;
     display: block;
-    left:14%;
-    top: 40%;
-    margin-top:-25%;
-    text-align: center;
+    left: 14%;
+    /* top: 285px; */
+    margin-top: 30%;
+    text-align: center
 }
 
 .InicioForm *{
@@ -42,7 +42,7 @@
 }
 
 label{
-    margin-top:4%;
+    margin-top:4px;
     display: block;
     width: 100%;
 }

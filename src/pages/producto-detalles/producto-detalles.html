@@ -19,8 +19,8 @@
       <img title="{{prod.nombre}}" src="{{prod.img}}">
     </div>
     <div class="ProdDetails">
-      <p id="titulo">{{prod.nombre}}</p>
-      <button id="agregarCarrito" type="button">Agregar al carrito</button>
+      <!-- <p id="titulo">{{prod.nombre}}</p> -->
+      <button ion-button round id="agregarCarrito">Agregar al carrito</button>
       <p id="precio">{{prod.moneda}} {{prod.precio}}</p>
       <p id="dimensiones">Dimensiones: {{prod.dimensiones}}</p>
       <p id="descripcion">Descripcion:<br /> {{prod.descripcion}}</p>
@@ -30,14 +30,13 @@
     <div id="newComment">
       <label>Comentar:</label>
       <textarea id="commentContent"></textarea>
-      <button id="sendComment">Comentar</button>
+      <button ion-button color="light"  id="sendComment">Comentar</button>
     </div>
     <div id="comments">
       <label>Comentarios de otros usuarios:</label>
-      <div class="comment">
-        <label class="commentUser">facundo</label>
-        <p class="commentContent">Comentario de facundo sobre elproducto cualquiera. la compra fue pesima y espero
-          poder cambiar este texto pronto</p>
+      <div class="comment" *ngFor="let comment of comments">
+        <label class="commentUser">{{comment.username}}</label>
+        <p class="commentContent">{{comment.content}}</p>
       </div>
     </div>
   </div>

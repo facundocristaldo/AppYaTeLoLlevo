@@ -20,12 +20,13 @@
       <h3>YaTeLoLlevo.com</h3>
     </div>
     <div id="RegisterForm" class="InicioForm">
-      <form>
-        <input id="UserName" class="txtinput" type="text" placeholder="Usuario" required />
-        <input id="Name" class="txtinput" type="text" placeholder="Nombre" required />
-        <input id="Email" class="txtinput" type="text" placeholder="Email" required />
-        <input id="UserPass" class="txtinput" type="password" placeholder="Contraseña" required />
-        <input id="UserPassConfirm" class="txtinput" type="password" placeholder="Confirme Contraseña" required />
+      <form> 
+        <input name="UserName" [(ngModel)]="username" class="txtinput" type="text" placeholder="Usuario" required />
+        <input name="Name" [(ngModel)]="nombre" class="txtinput" type="text" placeholder="Nombre" required />
+        <input name="Email" [(ngModel)]="email" class="txtinput" type="text" placeholder="Email" required />
+        <input name="UserPass" [(ngModel)]="contra" class="txtinput" type="password" placeholder="Contraseña" required />
+        <input name="UserPassConfirm" [(ngModel)]="confirmcontra" class="txtinput" type="password" placeholder="Confirme Contraseña" required />
+        
         <button id="btnRegister" class="btnConfirm" type="submit" (click)="registerEvent()">Registrarse</button>
       </form>
       <label>Ya tienes una cuenta? <a (click)="gotoHome()">Iniciar Sesión</a></label>

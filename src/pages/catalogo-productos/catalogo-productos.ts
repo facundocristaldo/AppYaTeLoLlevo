@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProductoDetallesPage } from '../producto-detalles/producto-detalles';
+import { HttpserviceProvider } from '../../providers/httpservice/httpservice';
 
 /**
  * Generated class for the CatalogoProductosPage page.
@@ -15,37 +16,26 @@ import { ProductoDetallesPage } from '../producto-detalles/producto-detalles';
   templateUrl: 'catalogo-productos.html',
 })
 export class CatalogoProductosPage {
-  @Input() emprut: string;
-  AllProds: Producto[] = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.emprut = navParams.get("emprut");
-    this.tempCargarProductos();
+  empresa: any = {};
+  AllProds: any = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http:HttpserviceProvider) {
+    this.empresa = navParams.data;
   }
 
 
-  tempCargarProductos(): void {
-    for (var i = 0; i < 30; i++) {
-      this.AllProds.push({
-        'nombre': 'Producto ' + i,
-        'emprut': this.emprut,
-        'precio': i,
-        'moneda': 'USD',
-        'img': 'https://cdn0.iconfinder.com/data/icons/website-kit-2/512/icon_55-512.png',
-        'descripcion': 'Esta es una descripcion del producto ' + i * 84 / 3 + '',
-        'dimensiones': '400 x 200mm'
-      });
-    }
-  }
+  
 
   ionViewDidLoad() {
-    console.log('Cargado el catalogo de productos para la empresa con rut ' + this.emprut);
+    console.log('Cargado el catalogo de productos para la empresa con rut ' + this.empresa.rut);
+    this.AllProds = this.http.CargarProductos(this.empresa.rut);
+
   }
 
 
 
   ViewDetails(prod: Producto) {
     console.log(prod);
-    this.navCtrl.push(ProductoDetallesPage, { 'producto': prod });
+    this.navCtrl.push(ProductoDetallesPage,  prod );
   }
 
 }
@@ -57,5 +47,6 @@ export interface Producto {
   moneda: string;
   img: string;
   dimensiones: string;
+  id:string
 
 }

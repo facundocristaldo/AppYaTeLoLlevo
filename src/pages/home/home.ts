@@ -4,6 +4,8 @@ import { RegistroPage } from '../registro/registro';
 import { CatalogoEmpresasPage } from '../catalogo-empresas/catalogo-empresas';
 import * as $ from "jquery";
  import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { HttpserviceProvider } from '../../providers/httpservice/httpservice';
+import { ProfilePage } from '../profile/profile';
 
 
 @Component({
@@ -12,7 +14,15 @@ import * as $ from "jquery";
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, private fb: Facebook,private alertCtrl: AlertController) {
+  usuario : string = "";
+  contras : string = "";
+  userId : string = "";
+
+  constructor(
+    public navCtrl: NavController, 
+    private fb: Facebook,
+    private alertCtrl: AlertController,
+    private http:HttpserviceProvider) {
 
   }
 
@@ -29,10 +39,11 @@ export class HomePage {
     if (socialMedia == 'facebook') {
       this.fb.login(['public_profile', 'email'])
         .then((res: FacebookLoginResponse) => {
-          this.presentAlert("logueado",'Logged into Facebook! ' + res.status,"ok");
+          // this.presentAlert("logueado",'Loeguado con Facebook! ' + res.status,"ok");
+          this.userId = res.authResponse.userID;
           this.LogInEvent(true);
         })
-        .catch(e => this.presentAlert("Error",'Error logging into Facebook' , "ok"));
+        .catch(e => this.presentAlert("Error",'Error al loguearse en Facebook' , "ok"));
 
     }
   }
@@ -43,14 +54,14 @@ export class HomePage {
 
   LogInEvent(esRedSocial : Boolean) {
     if (esRedSocial){
-      console.log("Hacer llamado al metodo para loguearse con red social");
-      if (true){
-        this.navCtrl.push(CatalogoEmpresasPage,{'username':'usuario'});
+      let valid = this.http.login("","",true,this.userId);
+      if (valid){
+        this.navCtrl.push(CatalogoEmpresasPage,this.userId);
       }
     }else if (this.isValidForm()) {
-      console.log("Hacer llamado al metodo para loguearse");
-      if (true) {
-        this.navCtrl.push(CatalogoEmpresasPage,{'username':'usuario'});
+      let valid = this.http.login(this.usuario,this.contras,false,"");
+      if (valid) {
+        this.navCtrl.push(CatalogoEmpresasPage,this.usuario);
       }
     } else {
       return false;

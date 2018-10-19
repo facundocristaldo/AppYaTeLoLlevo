@@ -18,5 +18,14 @@ export class MyApp {
       splashScreen.hide();
     });
   }
+ 
+  
+  goHome(){
+    
+  }
+
+  goProfile(){
+
+  }
 }
 

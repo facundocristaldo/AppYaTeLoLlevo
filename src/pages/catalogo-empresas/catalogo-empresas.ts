@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { CatalogoProductosPage } from '../catalogo-productos/catalogo-productos';
+import { HttpserviceProvider } from '../../providers/httpservice/httpservice';
+import { ProfilePage } from '../profile/profile';
 
 /**
  * Generated class for the CatalogoEmpresasPage page.
@@ -16,39 +18,33 @@ import { CatalogoProductosPage } from '../catalogo-productos/catalogo-productos'
 })
 export class CatalogoEmpresasPage {
 
-  @Input() username: string;
+  username: string;
   AllEmps: Empresa[] = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController) {
-    this.tempCargarEmpresas();
+  constructor(public navCtrl: NavController, public navParams: NavParams,private alertCtrl: AlertController, private http : HttpserviceProvider) {
+    this.username = this.navParams.data;
   }
 
   ionViewDidLoad() {
     console.log('Se carga la pagina de catalogo de empresas');
+    this.AllEmps = this.http.getEmpresas();
   }
 
-  tempCargarEmpresas(): void {
-    for (var i = 0; i < 30; i++) {
-      this.AllEmps.push({
-        'nombre': 'EMPRESA ' + i,
-        'rut': '0' + i + '5' + i + '0' + i + '8' + i,
-        'url': 'WWW.'+i+'EMPRESA' + i + '.COM',
-        'direccion': 'DIRECCION ' + i,
-        'img': 'IMG' + i + '.JPG'
-      });
-    }
+ 
+  goprofile(){
+    this.navCtrl.push(ProfilePage);
   }
 
 
-  gotoCatalogoProductos(emprut: string) {
-    console.log("llamar a api para controlar que la empresa ya tenga otorgado el acceso");
-    let valid : Boolean = false;
+  gotoCatalogoProductos($event) {
+    let valid : Boolean = this.http.tieneAcceso(this.username,$event.rut);
     if(valid){
-      this.navCtrl.push(CatalogoProductosPage, { 'emprut': emprut });
+      console.log($event);
+      this.navCtrl.push(CatalogoProductosPage, $event );
     }else{
       
       let alert = this.alertCtrl.create({
-        title: this.username+'Otorgar Acceso',
-        message: 'Otorga a la empresa acceso a sus datos?',
+        title: this.username+":",
+        message: 'La empresa '+$event.rut+' tendrá acceso a sus datos.',
         buttons: [
           {
             text: 'Cancelar',
@@ -62,9 +58,9 @@ export class CatalogoEmpresasPage {
             text: 'Aceptar',
             handler: () => {
 
-              console.log('Llamar a la api para otorgar acceso a la empresa emprut para el usuario username');
+              this.http.otorgarAcceso(this.username,$event.rut);
               
-              this.navCtrl.push(CatalogoProductosPage, { 'emprut': emprut });
+              this.navCtrl.push(CatalogoProductosPage, $event.rut);
             }
           }
         ]

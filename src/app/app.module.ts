@@ -12,6 +12,9 @@ import { CatalogoProductosPage } from '../pages/catalogo-productos/catalogo-prod
 import { ProductoDetallesPage } from '../pages/producto-detalles/producto-detalles';
 
 import { Facebook } from '@ionic-native/facebook';
+import { HttpserviceProvider } from '../providers/httpservice/httpservice';
+import { HttpClientModule } from '@angular/common/http';
+import { ProfilePage } from '../pages/profile/profile';
 
 
 @NgModule({
@@ -21,11 +24,13 @@ import { Facebook } from '@ionic-native/facebook';
     RegistroPage,
     CatalogoEmpresasPage,
     CatalogoProductosPage,
-    ProductoDetallesPage
+    ProductoDetallesPage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -34,13 +39,15 @@ import { Facebook } from '@ionic-native/facebook';
     RegistroPage,
     CatalogoEmpresasPage,
     CatalogoProductosPage,
-    ProductoDetallesPage
+    ProductoDetallesPage,
+    ProfilePage
   ],
   providers: [
    Facebook,
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    HttpserviceProvider
   ]
 })
 export class AppModule { }

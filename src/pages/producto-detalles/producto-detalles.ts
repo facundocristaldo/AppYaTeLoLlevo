@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Producto } from '../catalogo-productos/catalogo-productos';
+import { HttpserviceProvider } from '../../providers/httpservice/httpservice';
+import { Empresa } from '../catalogo-empresas/catalogo-empresas';
 
 /**
  * Generated class for the ProductoDetallesPage page.
@@ -16,15 +18,20 @@ import { Producto } from '../catalogo-productos/catalogo-productos';
 })
 export class ProductoDetallesPage {
   prod: Producto;
+  comments : any =[]
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.prod = this.navParams.get('producto');
-    console.log("dentro de detalles ", this.prod);
-  }
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private http:HttpserviceProvider
+    ) {
+      this.prod = this.navParams.data;
+     }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductoDetallesPage');
-
+    
+    this.comments = this.http.getComments(this.prod.emprut,this.prod.id);
+    
   }
 
 
