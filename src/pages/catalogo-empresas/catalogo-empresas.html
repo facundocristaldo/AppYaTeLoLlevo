@@ -16,14 +16,29 @@
 
 <ion-content>
   <div class="outerbox">
+    
+    <div id="RubrosList" class="hiddenRubrosList">
+      <h4>Rubros</h4>
+      <div (click)="FiltrarRubro('none')" class="list-item">Sin Filtro</div>
+      <div *ngFor="let rubro of Rubros" (click)="FiltrarRubro(rubro)" class="list-item">
+        {{rubro.Nombre}}
+      </div>
+    </div>
+    <button class="ToogleRubrosButton" (click)="toggleShow()">Rubros</button>
     <div class="searchBar">
-      <input id="searchText" type="text" placeholder="Buscar">
+      
+      <input class="searchText" id="searchTextEmp" type="text" placeholder="Buscar" (input)="BuscarEmpresas()">
       <ion-icon id="searchBtn" name="search"></ion-icon>
+    </div>
+    <div id="searchResultEmp" class="searchResultHidden">
+      <div>
+        <div class="searchResult-Item" *ngFor="let item of listaBusqueda" (click)="gotoCatalogoProductos(item)">{{item.Nombre}}</div>
+      </div>
     </div>
     <div id="AllEmps">
       <div class="divEmpresa" *ngFor="let emp of AllEmps" (click)="gotoCatalogoProductos(emp)">
-        <img src="https://image.flaticon.com/icons/png/512/484/484624.png" title="{{emp.nombre}}">
-        <label class="empName">{{emp.nombre}}</label>
+        <img src="{{emp.Logo}}" title="{{emp.Nombre}}">
+        <label class="empName">{{emp.Nombre}}</label>
       </div>
     </div>
   </div>

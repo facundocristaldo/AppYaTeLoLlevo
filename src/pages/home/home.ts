@@ -5,7 +5,7 @@ import { CatalogoEmpresasPage } from '../catalogo-empresas/catalogo-empresas';
 import * as $ from "jquery";
  import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { HttpserviceProvider } from '../../providers/httpservice/httpservice';
-import { ProfilePage } from '../profile/profile';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -13,17 +13,23 @@ import { ProfilePage } from '../profile/profile';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
-  usuario : string = "";
+  userData: any;
+  userEmail : string = "";
   contras : string = "";
   userId : string = "";
 
   constructor(
     public navCtrl: NavController, 
     private fb: Facebook,
-    private alertCtrl: AlertController,
-    private http:HttpserviceProvider) {
-
+    public alertCtrl: AlertController,
+    private http:HttpserviceProvider,
+    private storage : Storage
+    ) {
+      this.storage.set("hola","Holamundo");
+      this.storage.ready().then(() => {
+        this.storage.get('hola').then(a=>console.log(a));
+      });
+      
   }
 
   presentAlert( titulo:string, subtitulo:string, mensaje:string) {
@@ -34,16 +40,94 @@ export class HomePage {
     });
     alert.present();
   }
+  
   socialSignIn(socialMedia: string) {
+    
     console.log("Clickeado inicio de sesion con red social: " + socialMedia);
     if (socialMedia == 'facebook') {
-      this.fb.login(['public_profile', 'email'])
-        .then((res: FacebookLoginResponse) => {
-          // this.presentAlert("logueado",'Loeguado con Facebook! ' + res.status,"ok");
-          this.userId = res.authResponse.userID;
-          this.LogInEvent(true);
-        })
-        .catch(e => this.presentAlert("Error",'Error al loguearse en Facebook' , "ok"));
+      //Llama a la api de fb para loguearse
+      this.fb.login(['email', 'public_profile']).then((response: FacebookLoginResponse) => {
+        //obtiene los datos del usuario
+        this.fb.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)', []).then(profile => {
+          
+          this.userData = {
+            Email: profile['email'], 
+            Nombre: profile['first_name'], 
+            Foto: profile['picture_large']['data']['url'], 
+            IdFacebook: profile['id']
+          }
+          console.log("datos del usuario retornados de facebook",this.userData);
+          //llama al api local para loguearse con idFacebook y email
+          this.http.loginFacebook(this.userData).subscribe(
+            ret=>{
+              console.log("login fb db Alert ",this.userData.Email);
+              console.log("header de retorno login ",ret.headers.get("status"));
+              if (ret.status==200){
+                console.log("login fb db Alert ret ",ret);
+                //Obtiene los datos del usuario, dado su email
+                this.http.whois(this.userData.Email).subscribe(
+                  profile=>{
+                    console.log("Login FB Profile=> ",profile);
+                    if(profile!=null){
+                      //obtiene los datos del retorno del api
+                      this.userData = {
+                        Email: profile.cliente.Email, 
+                        Nombre: profile.cliente.Nombre, 
+                        Foto: profile.cliente.Foto, 
+                      }
+                     //guarda los datos en el storage
+                     this.storage.set("Email",this.userData.Email);
+                     this.storage.set("Nombre",this.userData.Nombre);
+                     this.storage.set("Foto",this.userData.Foto);
+                    
+                      //reenvia al catalogo de empresas
+                      this.navCtrl.push(CatalogoEmpresasPage,this.userData); 
+                    }   
+                  }
+                   );
+              }else if(ret.status==404){
+                //this.presentAlert("alert",this.userData,"OK");
+                //this.navCtrl.push(CatalogoEmpresasPage,this.userData);
+                console.log("Usuario no loguea en bd local",this.userData);
+                this.http.registerFacebook(this.userData).subscribe(
+                  ret=>{
+                    console.log("Registro por fb ret => ",ret.headers.get("status"));
+                    if(ret.status==200){
+                      //guardar token de retorno en la storage
+                      //Obtiene los datos del usuario, dado su email
+                      console.log("REgistro status 200 ret")
+                      this.http.whois(this.userData.Email).subscribe(
+                        profile=>{
+                          console.log("Profile=> ",profile);
+                          if(profile!=null){
+                            //obtiene los datos del retorno del api
+                            this.userData = {
+                              Email: profile.cliente.Email, 
+                              Nombre: profile.cliente.Nombre, 
+                              Foto: profile.cliente.Foto, 
+                            }
+                           //guarda los datos en el storage
+                           this.storage.set("Email",this.userData.Email);
+                           this.storage.set("Nombre",this.userData.Nombre);
+                           this.storage.set("Foto",this.userData.Foto);
+                          
+                            //reenvia al catalogo de empresas
+                            this.navCtrl.push(CatalogoEmpresasPage,this.userData); 
+                          }   
+                        }
+                         );
+                    }else{
+                      this.presentAlert("Error","Algo salió mal...","Ok");
+                    }
+                  }
+                );
+              }
+            }
+          );
+        }
+        )
+      })
+      .catch(e => this.presentAlert("Error",'Error al loguearse en Facebook' , "ok"));
 
     }
   }
@@ -52,17 +136,38 @@ export class HomePage {
     this.navCtrl.push(RegistroPage);
   }
 
-  LogInEvent(esRedSocial : Boolean) {
-    if (esRedSocial){
-      let valid = this.http.login("","",true,this.userId);
-      if (valid){
-        this.navCtrl.push(CatalogoEmpresasPage,this.userId);
-      }
-    }else if (this.isValidForm()) {
-      let valid = this.http.login(this.usuario,this.contras,false,"");
-      if (valid) {
-        this.navCtrl.push(CatalogoEmpresasPage,this.usuario);
-      }
+  LogInEvent() {
+    if (this.isValidForm()) {
+      //Se valida que el usuario y la contraseña esten bien llamando al rest
+      this.http.login(this.userEmail,this.contras).subscribe(
+        ret => {
+          console.log("login return ",ret);
+          //Estado 200 implica que valida las credenciales
+          if (ret.status==200){
+            //Obtiene los datos del usuario, dado su email
+            this.http.whois(this.userEmail).subscribe(
+            profile=>{
+              console.log("Profile=> ",profile);
+              if(profile!=null){
+                //obtiene los datos del retorno del api
+                this.userData = {
+                  Email: profile.cliente.Email, 
+                  Nombre: profile.cliente.Nombre, 
+                  Foto: profile.cliente.Foto, 
+                }
+               //guarda los datos en el storage
+               this.storage.set("Email",this.userData.Email);
+               this.storage.set("Nombre",this.userData.Nombre);
+               this.storage.set("Foto",this.userData.Foto);
+              
+                //reenvia al catalogo de empresas
+                this.navCtrl.push(CatalogoEmpresasPage,this.userData); 
+              }   
+            }
+             );
+          }    
+        }
+      );
     } else {
       return false;
     }
@@ -73,10 +178,18 @@ export class HomePage {
     $("#UserPswForm input").each(function () {
       var elem = $(this);
       if (elem.val() == "") {
-        this.presentAlert("Error","Algunos input están vacíos!","OK");
+        
         isValid = false;
       }
     });
+    if (!isValid){
+      let alert = this.alertCtrl.create({
+        title: "Error",
+        subTitle: "Algunos campos están vacíos!",
+        buttons: ["Ok"]
+      });
+      alert.present();
+    }
     return isValid;
   }
 }

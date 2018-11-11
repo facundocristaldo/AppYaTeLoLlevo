@@ -15,7 +15,8 @@ import { Facebook } from '@ionic-native/facebook';
 import { HttpserviceProvider } from '../providers/httpservice/httpservice';
 import { HttpClientModule } from '@angular/common/http';
 import { ProfilePage } from '../pages/profile/profile';
-
+import { IonicStorageModule } from '@ionic/storage'
+import { ImagePicker } from '@ionic-native/image-picker';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { ProfilePage } from '../pages/profile/profile';
   ],
   imports: [
     BrowserModule,
+    IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
     HttpClientModule
   ],
@@ -47,7 +49,8 @@ import { ProfilePage } from '../pages/profile/profile';
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    HttpserviceProvider
+    HttpserviceProvider,
+    ImagePicker
   ]
 })
 export class AppModule { }

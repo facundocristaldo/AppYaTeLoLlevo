@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header style="visibility: hidden">
   <ion-navbar>
     <ion-title>
       Ya Te Lo Llevo
@@ -13,18 +13,15 @@
 
     <div class="InicioForm">
       <form id="UserPswForm">
-        <input id="UserName" class="txtinput" type="text" placeholder="Usuario" [(ngModel)]="usuario" name="username" required />
+        <input id="UserName" class="txtinput" type="text" placeholder="Usuario" [(ngModel)]="userEmail" name="username" required />
         <input id="UserPass" class="txtinput" type="password" placeholder="Contraseña" [(ngModel)]="contras" name="contras" required />
-        <button id="btnLogin" class="btnConfirm" type="submit" (click)="LogInEvent(false)">Iniciar Sesión</button>
+        <button id="btnLogin" class="btnConfirm" type="submit" (click)="LogInEvent()">Iniciar Sesión</button>
       </form>
       <div class="redesSociales">
-        <button id="InicioFB" class="btnInicioSocial" type="button" (click)="socialSignIn('facebook')"><img src="https://faunalytics.org/wp-content/uploads/2015/02/fb-logo.png"
-            alt="Facebook" title="Facebook"></button>
-        <button id="InicioGG" class="btnInicioSocial" type="button" (click)="socialSignIn('google')"><img src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png"
-            alt="Google" title="Google"></button>
-        <button id="InicioTW" class="btnInicioSocial" type="button" (click)="socialSignIn('twitter')"><img src="https://cdn2.iconfinder.com/data/icons/the-circle-icons/513/twitter.png"
-            alt="Twitter" title="Twitter"></button>
+        <button id="InicioFB" class="btnInicioSocial" type="button" (click)="socialSignIn('facebook')">Facebook</button>
       </div>
+ 
+ 
       <label>Todavía no tienes una cuenta? <a (click)="gotoRegister()"> Regitrarse</a></label>
     </div>
   </div>

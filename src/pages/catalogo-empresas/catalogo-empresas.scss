@@ -11,9 +11,12 @@
     width: 60%;
     height: 45px;
     margin-left: 20%;
+    z-index: 2;
+    position: relative;
 }
 
-.searchBar #searchText{
+
+.searchBar .searchText{
        height: 45px;
     border-radius: 50px 0 0 50px;
     border-style: none;
@@ -31,9 +34,38 @@
     top: 0px;
     margin-left: -7px;
 }
+
+#searchResultEmp{
+    position: fixed;
+    top: 15px;
+    left: 20%;
+    background-color: white;
+    padding: 12px;
+    width: 60%;
+    border-radius: 0px 0px 44px 44px;
+    z-index: 1;
+    padding-top: 25px;
+}
+
+.searchResultShow{
+    display:block;
+}
+
+.searchResultHidden{
+    display: none;
+}
+
+.searchResult-Item{
+    width: 90%;
+    margin-left: 5%;
+    padding: 5px 0 5px 0;
+}
+
+    
 #AllEmps{
     text-align: center;
     margin-top: 7.1vw;
+    height: -webkit-fill-available;
 }
 .divEmpresa{
     display: inline-block;
@@ -57,4 +89,43 @@
     position: relative;
     color: white;
     text-decoration: underline;
+}
+
+#RubrosList{
+    position: fixed;
+    left: 50%;
+    width: 70%;
+    background: white;
+    padding-left: 2%;
+    z-index: 5;
+    margin-left: -35%;
+    bottom: 0;
+    background-color: antiquewhite;
+    border-radius: 50px 50px 0 0;
+}
+
+#RubrosList .list-item{
+    background-color: aliceblue;
+    padding: 10px 0;
+    font-size: 1pc;
+    margin: 3px;
+    margin-left: -4px;
+}
+
+.hiddenRubrosList{
+    visibility: hidden;
+}
+
+.showRubrosList{
+    visibility: visible;
+}
+
+.ToogleRubrosButton{
+    margin-top: 2px;
+    height: 40px;
+    width: 70px;
+    z-index: 100;
+    position: fixed;
+    right: 1%;
+    background-color: antiquewhite;
 }

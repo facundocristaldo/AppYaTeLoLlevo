@@ -26,8 +26,8 @@ export class CatalogoProductosPage {
   
 
   ionViewDidLoad() {
-    console.log('Cargado el catalogo de productos para la empresa con rut ' + this.empresa.rut);
-    this.AllProds = this.http.CargarProductos(this.empresa.rut);
+    console.log('Cargado el catalogo de productos para la empresa con rut ' + this.empresa.Rut);
+    this.AllProds = this.http.CargarProductos(this.empresa.Rut);
 
   }
 

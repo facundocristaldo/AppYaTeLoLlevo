@@ -87,5 +87,10 @@
         <variable name="APP_ID" value="1446002678864022" />
         <variable name="APP_NAME" value="YaTeLoLlevo" />
     </plugin>
+    <plugin name="cordova-plugin-nativestorage" spec="2.3.2" />
+    <plugin name="cordova-sqlite-storage" spec="2.5.1" />
+    <plugin name="cordova-plugin-telerik-imagepicker" spec="2.2.2">
+        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="your usage message" />
+    </plugin>
     <engine name="android" spec="7.1.1" />
 </widget>
