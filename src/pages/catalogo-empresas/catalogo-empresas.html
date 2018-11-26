@@ -2,10 +2,13 @@
 <ion-header>
 
   <!-- <ion-navbar hideBackButton="true"> -->
-    <ion-navbar>
+  <ion-navbar>
     <ion-title>Empresas</ion-title>
   
-  <ion-buttons end>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="EligeDireccion()">
+        <ion-icon name="navigate"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="goprofile()">
         <ion-icon name="person"></ion-icon>
       </button>
@@ -19,8 +22,8 @@
     
     <div id="RubrosList" class="hiddenRubrosList">
       <h4>Rubros</h4>
-      <div (click)="FiltrarRubro('none')" class="list-item">Sin Filtro</div>
-      <div *ngFor="let rubro of Rubros" (click)="FiltrarRubro(rubro)" class="list-item">
+      <div (click)="GetEmpresas('',0)" class="list-item">Sin Filtro</div>
+      <div *ngFor="let rubro of Rubros" (click)="GetEmpresas(rubro.Guid,0,'','')" class="list-item">
         {{rubro.Nombre}}
       </div>
     </div>

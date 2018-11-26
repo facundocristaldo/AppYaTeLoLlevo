@@ -8,12 +8,15 @@
 
   <ion-navbar>
     <ion-title>{{empresa.Nombre}}</ion-title>
+    <button ion-button icon-only (click)="gotoCarrito()">
+      <ion-icon name="cart"></ion-icon>
+    </button>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content class="default-bg">
+<ion-content class="default-bg" style="background-color:beige;">
   <div class="outerbox">
     <div class="searchBar">
       <input class="searchText" id="searchTextProd" type="text" placeholder="Buscar">
@@ -21,8 +24,9 @@
     </div>
     <div id="AllProds">
       <div class="divEmpresa" *ngFor="let prod of AllProds" (click)="ViewDetails(prod)">
-        <img src="{{prod.img}}" title="{{prod.nombre}}">
-        <label class="empName">{{prod.nombre}}</label>
+        <img *ngIf="prod.Imagenes==null" src="https://res.cloudinary.com/dnieertcs/image/upload/v1541794688/Producto-Default.jpg" alt="{{prod.Nombre}}">
+        <img *ngIf="prod.Imagenes!=null" src="{{prod.Imagenes[0]}}" title="{{prod.Nombre}}" alt="{{prod.Nombre}}">
+        <label class="empName">{{prod.Nombre.substring(0,10)}}...</label>
       </div>
     </div>
   </div>

@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { HttpserviceProvider } from '../../providers/httpservice/httpservice';
 import { Storage } from '@ionic/storage';
-import { ImagePicker } from '@ionic-native/image-picker';
+import { PermisosUsuarioPage } from './permisos-usuario/permisos-usuario';
+import { DatosUsuarioPage } from './datos-usuario/datos-usuario';
+import { DireccionesUsuarioPage } from './direcciones-usuario/direcciones-usuario';
 
 
 @IonicPage()
@@ -12,9 +14,13 @@ import { ImagePicker } from '@ionic-native/image-picker';
 })
 export class ProfilePage {
   userData:any;
-  base64Image:any;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http:HttpserviceProvider, private storage:Storage, private alertCtrl : AlertController,private imagePicker: ImagePicker) {
+  // this tells the tabs component which Pages
+  // should be each tab's root Page
+  DatosUsuario = DatosUsuarioPage;
+  DireccionesUsuario = DireccionesUsuarioPage;
+  PermisosUsuario = PermisosUsuarioPage;
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http:HttpserviceProvider, private storage:Storage) {
     this.userData = this.storage.get("userData");
     this.storage.ready().then(() => {
       this.storage.get('Email').then(a=>{console.log(a);this.userData.Email=a;});
@@ -30,42 +36,5 @@ export class ProfilePage {
 
     
   }
-  presentAlert( titulo:string, subtitulo:string, mensaje:string) {
-    let alert = this.alertCtrl.create({
-      title: titulo,
-      subTitle: subtitulo,
-      buttons: [mensaje]
-    });
-    alert.present();
-  }
-
-  selectImage(){
-   /* let options :any = {
-      maximumImagesCount:1
-    }
-    this.imagePicker.getPictures(options).then((results) => {
-      for (var i = 0; i < results.length; i++) {
-          console.log('Image URI: ' + results[i]);
-      }
-    }, (err) => { });
-
-    */
-   let options = {
-    maximumImagesCount: 1,
-    width: 300,
-    height: 300,
-    quality : 75
-  };
-
-  this.imagePicker.getPictures(options)
-    .then((results) => {
-        this.base64Image = "data:image/jpeg;base64," + results[0];
-        console.log("base 64 image" + this.base64Image);
-    }, (error) => {
-        console.log("ERROR -> " + JSON.stringify(error));
-    });
-  }
-
-  
   
 }

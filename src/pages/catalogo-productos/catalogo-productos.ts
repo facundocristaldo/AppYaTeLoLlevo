@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ProductoDetallesPage } from '../producto-detalles/producto-detalles';
 import { HttpserviceProvider } from '../../providers/httpservice/httpservice';
+import { ProductoDetallesPage } from './producto-detalles/producto-detalles';
+import { CarritoComprasPage } from './carrito-compras/carrito-compras';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the CatalogoProductosPage page.
@@ -17,8 +19,12 @@ import { HttpserviceProvider } from '../../providers/httpservice/httpservice';
 })
 export class CatalogoProductosPage {
   empresa: any = {};
-  AllProds: any = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http:HttpserviceProvider) {
+  AllProds: Producto[] = [];
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private http:HttpserviceProvider,
+    private storage: Storage
+    ) {
     this.empresa = navParams.data;
   }
 
@@ -27,7 +33,23 @@ export class CatalogoProductosPage {
 
   ionViewDidLoad() {
     console.log('Cargado el catalogo de productos para la empresa con rut ' + this.empresa.Rut);
-    this.AllProds = this.http.CargarProductos(this.empresa.Rut);
+    this.http.CargarProductos(this.empresa.Rut).subscribe(response=>{
+      if(response!=null){
+        response.productos.forEach(element => {
+          this.AllProds.push({
+            Nombre : element.PropProducto.Nombre,
+            Imagenes : element.Imagenes,
+            Rut: this.empresa.Rut,
+            ObjectId: element.ObjectId,
+            Moneda:"$",
+            Precio:element.PropProducto.Precio,
+            Volumen:element.PropProducto.Volumen,
+            Descripcion:element.PropProducto.Descripcion
+
+          });
+        });
+      }
+    });
 
   }
 
@@ -38,15 +60,27 @@ export class CatalogoProductosPage {
     this.navCtrl.push(ProductoDetallesPage,  prod );
   }
 
+
+  gotoCarrito(){
+    let Carrito  = {
+      Email : "", 
+      Rut : ""
+    };
+    this.storage.ready().then(() => {
+      this.storage.get('Email').then(a=>{console.log(a);Carrito.Email=a;}).then(()=>{
+        Carrito.Rut = this.empresa.Rut;
+        this.navCtrl.push(CarritoComprasPage,Carrito);
+      });
+    });
+  }
 }
 export interface Producto {
-  nombre: string;
-  descripcion: string;
-  emprut: string;
-  precio: number;
-  moneda: string;
-  img: string;
-  dimensiones: string;
-  id:string
-
+  Nombre: string;
+  Imagenes: string[];
+  Rut:string;
+  ObjectId:string;
+  Moneda:string;
+  Precio:string;  
+  Volumen:string;
+  Descripcion:string;
 }

@@ -1,26 +1,24 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Empresa } from '../../pages/catalogo-empresas/catalogo-empresas';
 import { Observable } from 'rxjs/Observable';
 
-/*
-  Generated class for the HttpserviceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class HttpserviceProvider {
   
   
   
-  
-  
-  serverurl : string  = "http://localhost:51532/api/";
+  serverurl : string  = "http://192.168.1.42/api/";
 
   constructor(public http: HttpClient) {
     console.log('Hello HttpserviceProvider Provider');
   }
+
+
+  changeServerIp(ip:string) : boolean{
+    this.serverurl = "http://"+ip+"/api/";
+    return true;
+  }
+
   //Iniciar Sesion Por Facebook 
   //Inicia sesion contra la base de datos local con el email y el userId de fb del cliente
   loginFacebook(usuario: any): Observable<any> {
@@ -30,10 +28,13 @@ export class HttpserviceProvider {
         'Authorization': 'Beaurer '*/
       })
     };
+    console.log("This user data cuando hago login facebook tiene " , usuario);
     return this.http.post(this.serverurl+"Client/IniciarSesionPorFacebook",
       {
        "Email":usuario.Email,
-       "IdFacebook":usuario.IdFacebook
+       "IdFacebook":usuario.IdFacebook,
+       "Nombre":usuario.Nombre,
+       "Foto":usuario.Foto
       },
       httpOptions);
   }
@@ -64,10 +65,9 @@ export class HttpserviceProvider {
   }
 
   //Obtener todas las empresas
-  //Obtiene todas las empresas de la plataforma
-  //Proximo a cambiar para el api del cliente
-  getEmpresas(barrio:string,index:number) : Observable<any>{
-    return this.http.get(this.serverurl+"Client/ObtenerEmpresas?barrio="+barrio+"&index="+index);
+  getEmpresas(rubro:string,index:number, lat : string, lng : string) : Observable<any>{
+    // ObtenerEmpresasPorRubro(string idRubro, int pagina)
+    return this.http.get(this.serverurl+"Client/ObtenerEmpresasPorRubro?idRubro="+rubro+"&pagina="+index+"&lat="+lat+"&lng="+lng);
   }
   
   getRubro() : Observable<any>{
@@ -75,28 +75,23 @@ export class HttpserviceProvider {
   }
 
 
+  actualizarFoto(useremail:string,photo:string){
+    let httpOptions = {
+      headers:new HttpHeaders({
+        'Content-Type' : 'application/json'/*,
+        'Authorization': 'Beaurer '*/
+      })
+    };
+    return this.http.post(this.serverurl+"Client/ActualizarImagenUsuario",
+      {
+        "cliEmail":useremail,
+        "base64img":photo
+      },
+      httpOptions);
+  }
 
-  CargarProductos(emprut:string): any[] {
-    var allprods :any = [];
-    let img = "";
-    
-    for (var i = 0; i < 30; i++) {
-      if (i%2==0){
-        img = "https://cdn0.iconfinder.com/data/icons/website-kit-2/512/icon_55-512.png";
-      }else{
-        img = "http://www.abudhabi2.com/wp-content/uploads/2017/06/IMG-Worlds-of-Adventure-1-945x776.jpg";
-      }
-      allprods.push({
-        'nombre': 'Producto ' + i,
-        'emprut': emprut,
-        'precio': i,
-        'moneda': (i%3==0)?'USD':'$',
-        'img': img,
-        'descripcion': 'Esta es una descripcion del producto ' + (i+2) * 84 / 3 + '',
-        'dimensiones': (i+1)*28/3+' x '+(i+1)*40/5+'mm'
-      });
-    }
-    return allprods;
+  CargarProductos(emprut:string): Observable<any> {
+    return this.http.get(this.serverurl+"Client/ListarProductos?rut="+emprut);
   }
 
   register(usuario:any) : Observable<any>{
@@ -171,5 +166,88 @@ export class HttpserviceProvider {
     return  this.http.get(this.serverurl+"Client/BuscarEmpresas?partnombre="+partnombre);
   }
 
+  ListarPermisos(email:string,pagIndex:number):Observable<any>{
+    return this.http.get(this.serverurl+"Client/ListarPermisosUsuario?email="+email+"&pagina="+pagIndex);
+  }
+
+  ActualizarDireccion(email: string,ubicacion: { Direccion: string; lat: string; lng: string; }): Observable<any> {
+    let httpOptions = {
+      headers:new HttpHeaders({
+        'Content-Type' : 'application/json'
+      })
+    };
+    console.log ("http service envia datos",
+      "Email:",email,
+      
+      "Coordenada :{\
+        Latitud : ",ubicacion.lat,
+        "Longitud : ",ubicacion.lng  
+      );
+    return this.http.post(this.serverurl+"Client/AgregarDireccionCliente",
+    {
+      Email:email,
+      Direccion : ubicacion.Direccion,
+      Longitud : ubicacion.lng,
+      Latitud : ubicacion.lat 
+    },httpOptions);
+  }
   
+  ListarDireccionesCliente(email:string): Observable<any>{
+    console.log("email para pedit direcciones:"+email);
+    let httpOptions = {
+      headers:new HttpHeaders({
+        'Content-Type' : 'application/json'
+      })
+    };
+    return this.http.post(this.serverurl+"Client/ListarDireccionesCliente?email="+email
+    ,httpOptions);
+  }
+  
+  agregarProdAlCarrito(prod:any, email: string): Observable<any>{
+    console.log("Datos de producto a agregar ",prod);
+    let httpOptions = {
+      headers:new HttpHeaders({
+        'Content-Type' : 'application/json'
+      })
+    };
+    return this.http.post(this.serverurl+"Client/AgregarProductoCarrito",
+    {
+      Email: email,
+      Rut: prod.Rut,
+      IdProduct: prod.ObjectId,
+      Cantidad:1
+    }
+    ,httpOptions);
+  }
+
+  getCarrito(Email : string, Rut:string): Observable<any>{
+    console.log(Email +" es el email del usuario y el rut de la empresa es" + Rut);
+    let httpOptions = {
+      headers:new HttpHeaders({
+        'Content-Type' : 'application/json'
+      })
+    };
+    return this.http.post(this.serverurl+"Client/VerCarritodeCliente",
+    {
+      EmailCliente: Email,
+      Rut: Rut
+    }
+    ,httpOptions);
+  }
+
+  pagaCarrito(Carrito : any ) :Observable<any>{
+    console.log(Carrito.Email +" es el email del usuario y el rut de la empresa es" + Carrito.Rut,Carrito);
+    let httpOptions = {
+      headers:new HttpHeaders({
+        'Content-Type' : 'application/json'
+      })
+    };
+    return this.http.post(this.serverurl+"Client/PagarCarrito",
+    {
+      EmailCliente: Carrito.Email,
+      Rut: Carrito.Rut
+    }
+    ,httpOptions);
+  }
+
 }

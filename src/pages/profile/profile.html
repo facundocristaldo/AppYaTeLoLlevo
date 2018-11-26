@@ -7,22 +7,18 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>profile</ion-title>
+    <ion-title>Perfil</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-card *ngIf="userData">
-    <ion-card-header>{{ userData.Nombre }}</ion-card-header>
-    <img *ngIf="userData.Foto" [src]="userData.Foto" />
-    <img *ngIf="!userData.Foto" src="https://res.cloudinary.com/dnieertcs/image/upload/v1541794697/Profile-Default.jpg" />
-    <ion-card-content>
-      <p>Email: {{ userData.Email }}</p>
-      <p>First Name: {{ userData.Nombre }}</p>
-    </ion-card-content>
-  </ion-card>
-  <button (click)="selectImage()">Picture</button>
+     <ion-tabs>
+        <ion-tab [root]="DatosUsuario" tabTitle="General">General</ion-tab>
+        <ion-tab [root]="DireccionesUsuario" tabTitle="Direcciones">Direcciones</ion-tab>
+        <ion-tab [root]="PermisosUsuario" tabTitle="Permisos">Permisos</ion-tab>
+      </ion-tabs>
+  
   
 </ion-content>

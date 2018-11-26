@@ -9,7 +9,6 @@ import { HomePage } from '../pages/home/home';
 import { RegistroPage } from '../pages/registro/registro';
 import { CatalogoEmpresasPage } from '../pages/catalogo-empresas/catalogo-empresas';
 import { CatalogoProductosPage } from '../pages/catalogo-productos/catalogo-productos';
-import { ProductoDetallesPage } from '../pages/producto-detalles/producto-detalles';
 
 import { Facebook } from '@ionic-native/facebook';
 import { HttpserviceProvider } from '../providers/httpservice/httpservice';
@@ -17,6 +16,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfilePage } from '../pages/profile/profile';
 import { IonicStorageModule } from '@ionic/storage'
 import { ImagePicker } from '@ionic-native/image-picker';
+import { PermisosUsuarioPage } from '../pages/profile/permisos-usuario/permisos-usuario';
+import { Geolocation } from '@ionic-native/geolocation'
+import { ChangeipserverPage } from '../pages/changeipserver/changeipserver';
+import { DatosUsuarioPage } from '../pages/profile/datos-usuario/datos-usuario';
+import { DireccionesUsuarioPage } from '../pages/profile/direcciones-usuario/direcciones-usuario';
+import { GoogleMapComponent } from '../pages/profile/direcciones-usuario/google-map/google-map';
+import { ProductoDetallesPage } from '../pages/catalogo-productos/producto-detalles/producto-detalles';
+import { CarritoComprasPage } from '../pages/catalogo-productos/carrito-compras/carrito-compras';
+import { PagoCarritoPage } from '../pages/catalogo-productos/carrito-compras/pago-carrito/pago-carrito';
 
 @NgModule({
   declarations: [
@@ -26,13 +34,20 @@ import { ImagePicker } from '@ionic-native/image-picker';
     CatalogoEmpresasPage,
     CatalogoProductosPage,
     ProductoDetallesPage,
-    ProfilePage
+    ProfilePage,
+    GoogleMapComponent,
+    ChangeipserverPage,
+    DireccionesUsuarioPage,
+    PermisosUsuarioPage,
+    DatosUsuarioPage,
+    CarritoComprasPage,
+    PagoCarritoPage
   ],
   imports: [
     BrowserModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -42,15 +57,23 @@ import { ImagePicker } from '@ionic-native/image-picker';
     CatalogoEmpresasPage,
     CatalogoProductosPage,
     ProductoDetallesPage,
-    ProfilePage
+    ProfilePage,
+    ChangeipserverPage,
+    DatosUsuarioPage,
+    DireccionesUsuarioPage,
+    PermisosUsuarioPage,
+    CarritoComprasPage,
+    PagoCarritoPage
   ],
   providers: [
-   Facebook,
+    Facebook,
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     HttpserviceProvider,
-    ImagePicker
+    ImagePicker,
+    Geolocation,
+    
   ]
 })
 export class AppModule { }

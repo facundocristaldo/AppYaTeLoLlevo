@@ -9,6 +9,7 @@
 
 <ion-content padding>
   <div class="Container">
+    <button id="botonipchange" (click)="gotoIpchange()">IP</button>
     <img class="logoimg" src="https://image.freepik.com/vector-gratis/logotipo-de-vector-de-camion_20448-161.jpg" alt="logo empresa" />
 
     <div class="InicioForm">
@@ -20,8 +21,6 @@
       <div class="redesSociales">
         <button id="InicioFB" class="btnInicioSocial" type="button" (click)="socialSignIn('facebook')">Facebook</button>
       </div>
- 
- 
       <label>Todavía no tienes una cuenta? <a (click)="gotoRegister()"> Regitrarse</a></label>
     </div>
   </div>

@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{prod.nombre}}</ion-title>
+    <ion-title>{{prod.Nombre}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,14 +16,14 @@
 <ion-content style="background-color:beige" class="default-bg">
   <div id="producto-detalles">
     <div class="prodphoto">
-      <img title="{{prod.nombre}}" src="{{prod.img}}">
+      <img title="{{prod.Nombre}}" src="{{prod.Imagenes}}">
     </div>
     <div class="ProdDetails">
       <!-- <p id="titulo">{{prod.nombre}}</p> -->
-      <button ion-button round id="agregarCarrito">Agregar al carrito</button>
-      <p id="precio">{{prod.moneda}} {{prod.precio}}</p>
-      <p id="dimensiones">Dimensiones: {{prod.dimensiones}}</p>
-      <p id="descripcion">Descripcion:<br /> {{prod.descripcion}}</p>
+      <button ion-button round id="agregarCarrito" (click)="agregarAlCarrito()">Agregar al carrito</button>
+      <p id="precio">{{prod.Moneda}} {{prod.Precio}}</p>
+      <p id="dimensiones">Volumen: {{prod.Volumen}}</p>
+      <p id="descripcion">Descripcion:<br /> {{prod.Descripcion}}</p>
 
     </div>
 

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { CatalogoProductosPage } from '../catalogo-productos/catalogo-productos';
 import { HttpserviceProvider } from '../../providers/httpservice/httpservice';
 import { ProfilePage } from '../profile/profile';
 import * as $ from "jquery";
+import { Storage } from '@ionic/storage';
+import { DireccionesUsuarioPage } from '../profile/direcciones-usuario/direcciones-usuario';
 
 /**
  * Generated class for the CatalogoEmpresasPage page.
@@ -26,35 +28,99 @@ export class CatalogoEmpresasPage {
   Email:string;
   Rubros: any[];
   showRubrosList:Boolean=false;
+  lat: string;
+  lng: string;
   
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private alertCtrl: AlertController, 
-    private http : HttpserviceProvider) 
+    private http : HttpserviceProvider,
+    private storage : Storage,
+    private modalCtrl:ModalController
+    ) 
     {
       this.username = this.navParams.data.Nombre;
       this.Email = this.navParams.data.Email;
+      this.EligeDireccion();
     }
 
   ionViewDidLoad() {
+    
     this.CargarRubros();
     this.count=0;
+    console.log("Datos Usuario ",this.Email,this.username);
+    
     console.log('Se carga la pagina de catalogo de empresas');
-    this.http.getEmpresas("",this.count).subscribe(res=>{
-      console.log("Respuesta del servidor al pedir this.empresasAll",res);
-      res.empresa.forEach(element => {
-        console.log(element);
-        this.count=+1;
-        this.AllEmps.push(element);
-        
-      });
-    });
+    //this.GetEmpresas("",0, "","");
   }
   
+  EligeDireccion() {
+    this.http.ListarDireccionesCliente(this.Email).subscribe(res=>{
+      console.log("Respuesta de las direcciones que ya tiene el cliente: ",res);
+      let response : any = res;
+      let direcciones : any[] = [];
 
- 
+      response.direcciones.forEach(element => {
+        let aux = {
+          Latitud:element.Latitud,
+          Longitud:element.Longitud,
+          Direccion:element.Direccion
+        }
+        direcciones.push(aux);
+      });
 
+      let alert = this.alertCtrl.create({
+        title:"Seleccionar Direccion:",
+        
+        buttons:
+        [
+          {
+            text:"Ok",
+            handler:data=>
+            {
+              let dir : any = data;
+              console.log(dir);
+              if (dir == undefined || dir==null || dir.Direccion.trim() ==""|| dir.Latitud.trim() ==""|| dir.Longitud.trim() ==""){
+                return false;
+              }else{
+                this.storage.set("DirCliente",dir);
+                this.http.getEmpresas("",0,dir.Latitud,dir.Longitud).subscribe(res=>{
+                  this.AllEmps=[];
+                  if (res.empresa!=null){
+                    console.log("Respuesta del servidor al pedir this.empresasAll",res);
+                    res.empresa.forEach(element => {
+                      //console.log("Empresa:",element);
+                      this.AllEmps.push(element);
+                    });
+                  }
+                });
+                return true;
+              }
+            }
+          },
+          {
+            text:"Nueva",
+            handler:data=>{
+              let canDismiss={
+                candismiss:true
+              };
+              this.navCtrl.push(DireccionesUsuarioPage,canDismiss);
+              
+            }
+          }
+        ]
+      });
+      direcciones.forEach(elem => {
+        alert.addInput({
+          label:elem.Direccion,
+          type:'radio',
+          value:elem,
+        });
+      });
+      alert.present();
+    });
+  }
   
   goprofile(){
     this.navCtrl.push(ProfilePage);
@@ -67,7 +133,7 @@ export class CatalogoEmpresasPage {
     this.http.tieneAcceso(this.Email,$event.Rut).subscribe(response=>{
       console.log("Respuesta del servidor sobre los permisos del usuario "+this.Email+" para la empresa "+$event.Rut+" es "+response.message);
       valid = response.message;
-      if(valid=="True"){
+      if(valid=="true"){
         console.log($event);
         this.navCtrl.push(CatalogoProductosPage, $event );
       }else{
@@ -158,8 +224,23 @@ export class CatalogoEmpresasPage {
     });
   }
 
-  FiltrarRubro(rubro:string){
-    console.log("procedimiento para filtrar empresas por rubro ",rubro);
+  GetEmpresas(rubro:string, index:number, lat : string, lng : string){
+    this.storage.ready().then(()=>{
+      let dir : any;
+      this.storage.get("DirCliente").then(a=>{dir=a;
+        console.log(dir);
+        this.http.getEmpresas(rubro,0,dir.Latitud,dir.Longitud).subscribe(res=>{
+          this.AllEmps=[];
+          if (res.empresa!=null){
+            console.log("Respuesta del servidor al pedir this.empresasAll",res);
+            res.empresa.forEach(element => {
+              //console.log("Empresa:",element);
+              this.AllEmps.push(element);
+            });
+          }
+        });
+      });
+    });
   }
 
   toggleShow(){
