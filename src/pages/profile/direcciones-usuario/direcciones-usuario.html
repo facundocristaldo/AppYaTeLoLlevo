@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header color="primary">
 
   
 
@@ -12,8 +12,22 @@
 
 
 <ion-content padding>
-    <google-map [email]="userData.Email"></google-map>
-    <div *ngIf="canDismiss">
-      <button (click)="dismiss()">Dismiss</button>
+    <div id="MY-list" *ngIf="!canDismiss">
+      <div class="MY-list-item " *ngFor="let dir of Direcciones">
+        <div class="MY-dir-item">{{dir.Direccion}}</div>
+        <div></div>
+        <div>
+          <button class="MY-btn-danger" (click)="BorrarDireccion(dir.GuidDireccion)">Borrar</button>
+        </div>
       </div>
+    </div>
+    <div *ngIf="canDismiss">
+      <google-map id="MY-GoogleMap" [email]="userData.Email"></google-map>
+      <button (click)="dismiss()" class="MY-btn-default">Atras</button>
+    </div>
+    <div *ngIf="!canDismiss">
+      <button ion-button icon-only (click)="NuevaDir()" id="MY-btn-add-dir">
+        <ion-icon name="add" ></ion-icon>
+      </button>
+    </div>
 </ion-content>

@@ -21,6 +21,7 @@ export class CarritoComprasPage {
   Productos :any = [];
   Email : string;
   Rut :string;
+  isEmpty:boolean=true;
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private storage : Storage,
@@ -29,6 +30,9 @@ export class CarritoComprasPage {
   }
 
   ionViewDidLoad() {
+    this.CargarCarrito();
+  }
+  CargarCarrito(){
     console.log('ionViewDidLoad CarritoComprasPage');
     this.Rut = this.navParams.data.Rut;
     this.Email = this.navParams.data.Email;
@@ -37,12 +41,12 @@ export class CarritoComprasPage {
         this.http.getCarrito(this.Email,this.Rut).subscribe(response=>{
           console.log(response);
           try{
-            let auxProd ={
-              
-            }
+            let auxProd ={};
           let carrito : any = response.carrito;
           let allProds :any [] = carrito.Productos;
+            this.Productos=[];
           allProds.forEach(element => {
+          this.isEmpty=false;
             let prod : any = element;
             let auxProd ={
               ObjectId: prod.ObjectId,
@@ -51,8 +55,8 @@ export class CarritoComprasPage {
               Descripcion: prod.PropProducto.Descripcion,
               Peso:prod.PropProducto.Peso,
               Volumen:prod.PropProducto.Volumen,
-              Precio:prod.PropProducto.Precio,
-              //Foto: prod.PropProducto.Imagenes[0]
+              Precio:prod.PropProducto.Precio
+//              Imagenes: prod.PropProducto.Imagenes[0]
             }
             this.Productos.push(auxProd);
           });
@@ -66,15 +70,22 @@ export class CarritoComprasPage {
     //   });
     // });
   }
-
   PagarCarrito(){
 //    this.http.PagarCarrito()
-let Carrito = {
-  Rut: this.Rut,
-  Email : this.Email,
-  Productos : this.Productos
-}
-this.navCtrl.push(PagoCarritoPage,{Carrito:Carrito});
+    let Carrito = {
+      Rut: this.Rut,
+      Email : this.Email,
+      Productos : this.Productos
+    }
+    this.navCtrl.push(PagoCarritoPage,{Carrito:Carrito});
   }
 
+  QuitarProductodeCarrito(ObjectId:string){
+    this.http.quitarProductodeCarrito(this.Email,this.Rut,ObjectId).subscribe(response=>{
+      console.log("Respuesta del servidor",response);
+      if (response.status==200){
+        this.CargarCarrito();
+      }
+    });
+  }
 }

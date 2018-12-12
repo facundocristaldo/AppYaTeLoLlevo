@@ -6,37 +6,58 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar  color="primary">
     <ion-title>{{prod.Nombre}}</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="presentActionSheet()">
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content style="background-color:beige" class="default-bg">
+<ion-content class="ion-content">
+
+  
   <div id="producto-detalles">
     <div class="prodphoto">
-      <img title="{{prod.Nombre}}" src="{{prod.Imagenes}}">
+        <!-- <ion-slides>
+            <ion-slide *ngIf="prod.Imagenes==null || prod.Imagenes[0]==null">
+                <img title="{{prod.Nombre}}" src="https://res.cloudinary.com/dnieertcs/image/upload/v1541794688/Producto-Default.jpg">
+            </ion-slide>
+        </ion-slides> -->
+        <ion-slides>
+            <ion-slide *ngFor="let img of prod.Imagenes">
+              <img title="{{prod.Nombre}}" src="{{img}}">
+          </ion-slide>
+        </ion-slides>
     </div>
     <div class="ProdDetails">
       <!-- <p id="titulo">{{prod.nombre}}</p> -->
-      <button ion-button round id="agregarCarrito" (click)="agregarAlCarrito()">Agregar al carrito</button>
+      
       <p id="precio">{{prod.Moneda}} {{prod.Precio}}</p>
-      <p id="dimensiones">Volumen: {{prod.Volumen}}</p>
+      <button ion-button round id="agregarCarrito" (click)="agregarAlCarrito()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+      <p id="puntos">Puntos: {{prod.Puntos}}</p>
+      <p id="peso">Peso: {{prod.Peso}}</p>
+      <p id="volumen">Volumen: {{prod.Volumen}}</p>
       <p id="descripcion">Descripcion:<br /> {{prod.Descripcion}}</p>
 
     </div>
 
     <div id="newComment">
       <label>Comentar:</label>
-      <textarea id="commentContent"></textarea>
-      <button ion-button color="light"  id="sendComment">Comentar</button>
+      <textarea name="nuevoComentario" [(ngModel)]="nuevoComentario" id="commentContent"></textarea>
+      <button ion-button id="sendComment"  (click)="ComentarProd()" color="primary">Comentar</button>
     </div>
     <div id="comments">
       <label>Comentarios de otros usuarios:</label>
       <div class="comment" *ngFor="let comment of comments">
-        <label class="commentUser">{{comment.username}}</label>
-        <p class="commentContent">{{comment.content}}</p>
+        <label class="commentUser">{{comment.FechaFront}}  {{comment.Email}}</label>
+        <p class="commentContent">{{comment.Comentario}}</p>
       </div>
     </div>
   </div>

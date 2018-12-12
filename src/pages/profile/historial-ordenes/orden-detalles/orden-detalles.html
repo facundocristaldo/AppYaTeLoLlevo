@@ -1,0 +1,59 @@
+<!--
+  Generated template for the OrdenDetallesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!-- <ion-header>
+
+  <ion-navbar>
+    <ion-title>orden-detalles</ion-title>
+  </ion-navbar>
+
+</ion-header> -->
+
+
+<ion-content padding>
+  <h3>
+    <button ion-button icon-only (click)="this.navCtrl.pop()" id="MY-btn-delete">
+      <ion-icon name="arrow-back" ></ion-icon>
+    </button>
+    Productos
+  </h3>
+  <div class="Orden">
+    <div id="MY-list">
+      <div class="MY-list-item" *ngFor="let producto of orden.Productos" >
+        <div class="MY-item-content">
+          <div>{{producto.NombreProducto}}</div>
+          <div>{{orden.TipoMoneda}} {{producto.Precio}}</div>
+          <div>{{producto.Cantidad}} Unidad/es</div>
+        </div>
+        <div class="MY-item-block" *ngIf="!producto.Puntuada">
+          <rating-stars [rating]='0' [itemId]='producto.ObjectId' (ratingClick)='ratingComponentClick($event)'></rating-stars>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<!-- Activo: true
+CantidadPaquetes: 0
+Comision: 15
+Direccion: ""
+EmailCliente: "facu.cristaldo.96@gmail.com"
+FechaString: "7/12/2018 0:56"
+FormaDePago: "PayPal"
+Guid: "2e22ee4a-2815-413e-976e-8cb12366971e"
+GuidEstado: "1000"
+NombreEmpresa: "java"
+NombreEstado: "Resuelto"
+Peso: 3.4
+Precio: 462
+Productos: (2) [{…}, {…}]
+Puntuacion: 4
+Puntuada: null
+Rut: "111111111111"
+TimeStampOrden: "2018-12-07T00:56:22.527"
+TipoMoneda: "USD"
+TransaccionPaypal: "testing"
+Volumen: 0
+ -->

@@ -167,11 +167,13 @@ export class HomePage {
                       Email: profile.cliente.Email, 
                       Nombre: profile.cliente.Nombre, 
                       Foto: profile.cliente.Foto, 
+                      Telefono : profile.cliente.Telefono
                     }
                    //guarda los datos en el storage
                    this.storage.set("Email",this.userData.Email);
                    this.storage.set("Nombre",this.userData.Nombre);
                    this.storage.set("Foto",this.userData.Foto);
+                   this.storage.set("Telefono",this.userData.Telefono); 
                     loader.dismiss();
                     //reenvia al catalogo de empresas
                     this.navCtrl.push(CatalogoEmpresasPage,this.userData); 
@@ -216,11 +218,13 @@ export class HomePage {
                   Email: profile.cliente.Email, 
                   Nombre: profile.cliente.Nombre, 
                   Foto: profile.cliente.Foto, 
+                  Telefono : profile.cliente.Telefono
                 }
                //guarda los datos en el storage
                this.storage.set("Email",this.userData.Email);
                this.storage.set("Nombre",this.userData.Nombre);
                this.storage.set("Foto",this.userData.Foto);
+               this.storage.set("Telefono",this.userData.Telefono); 
                 loader.dismiss();
                 //reenvia al catalogo de empresas
                 this.navCtrl.push(CatalogoEmpresasPage,this.userData); 

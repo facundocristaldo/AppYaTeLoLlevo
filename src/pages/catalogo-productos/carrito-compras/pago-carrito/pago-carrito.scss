@@ -1,3 +1,26 @@
 page-pago-carrito {
+    #MY-list .MY-list-item {
+        padding: 2pc;
+        background-color: #e5f3f8;
+        webkit-box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.2), 4px 4px 3px 0 rgba(0, 0, 0, 0.19);
+        -webkit-box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.2), 4px 4px 3px 0 rgba(0, 0, 0, 0.19);
+        box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.2), 4px 4px 3px 0 rgba(0, 0, 0, 0.19);
+    }
 
+    #MY-btn-pagar{
+        text-align: right;
+    }
+    
+    #MY-btn-pagar button{
+        width: 6pc;
+    }
+
+    .ClientEmail{
+        margin-bottom: 2pc;
+        font-size: 20px;
+    }
+    .EmpRut{
+        margin-bottom: 2pc;
+        font-size: 20px;
+    }
 }

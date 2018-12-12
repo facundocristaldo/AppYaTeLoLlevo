@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar  color="primary">
     <ion-title>PagoCarrito</ion-title>
   </ion-navbar>
 
@@ -14,7 +14,21 @@
 
 
 <ion-content padding>
-<div>
+    <div id="MY-list">
+        <div class="MY-list-item" >
+          <!-- <div  class="MY-item-content"> -->
+            <div class="EmpRut"> Empresa: {{Carrito.Rut}}</div>
+            <div class="ClientEmail"> Cliente: {{Carrito.Email}}</div>
+            <div class="ClientEmail">USD {{Carrito.PrecioTotal}}</div>
+            <div id="MY-btn-pagar">
+              <button ion-button icon-only (click)="Pagar()" >
+                Pagar
+              </button>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+<!-- <div>
   <div>
     <p>{{Carrito.Rut}}</p>
     <p>{{Carrito.Email}}</p>
@@ -23,5 +37,5 @@
   <div>
     <button (click)="Pagar()">Pagar</button>
   </div>
-</div>
+</div> -->
 </ion-content>

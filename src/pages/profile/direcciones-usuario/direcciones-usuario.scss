@@ -1,3 +1,37 @@
+@import url("/src/theme/variables.scss");
 page-direcciones-usuario {
 
+    .MY-GoogleMap{
+        border:1px solid black;
+    }
+
+    .MY-dir-item{
+        position: relative;
+        left: 20%;
+        height: 50px;
+        width: 80%;
+        padding-top: 10px;
+        padding-left: 10px;
+    }
+    .btn-Nueva{
+        border: 1px solid black;
+    }
+    #MY-btn-add-dir{
+        position: absolute;
+        bottom: 2pc;
+        right: 2pc;
+    }
+}
+
+.MY-btn-danger{
+    background: #e23939;
+    -webkit-box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.2), 4px 4px 3px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.2), 4px 4px 3px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 3px;
+    padding: 10px;
+    float: left;
+    position: relative;
+    width: 18%;
+    left: 1%;
+    margin-top: -40px;
 }

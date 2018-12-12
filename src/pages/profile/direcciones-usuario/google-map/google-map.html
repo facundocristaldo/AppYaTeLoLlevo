@@ -1,11 +1,11 @@
 <div>      
-    <label>Direccion:</label>
-    <input name="elementForm1" id="form1Direccion" [(ngModel)]="formEmp.Direccion"  #inpDir type="text" autocorrect="off" autocapitalize="off" spellcheck="off"/>
-    <label for="map">Map shown below</label>
+    <div class="MY-input-dir">
+        <input name="elementForm1" id="form1Direccion" [(ngModel)]="formEmp.Direccion"  #inpDir type="text" autocorrect="off" autocapitalize="off" spellcheck="off"/>
+    </div>
     <div id="FormAgregarCont">
         <div id="map">
 
         </div>
     </div>
-    <button id="btnActualizarDireccion" (click)="ActualizarDireccion()">Actualizar Direccion</button>
+    <button class="MY-btn-success btn-agregar" id="btnActualizarDireccion" (click)="ActualizarDireccion()">Agregar Direccion</button>
 </div>

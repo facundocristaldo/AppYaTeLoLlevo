@@ -37,6 +37,7 @@ export class DatosUsuarioPage {
       this.storage.get('Email').then(a=>{console.log(a);this.userData.Email=a;});
       this.storage.get('Nombre').then(a=>{console.log(a);this.userData.Nombre=a;});
       this.storage.get('Foto').then(a=>{console.log(a);this.userData.Foto=a;});
+      this.storage.get('Telefono').then(a=>{console.log(a);this.userData.Telefono=a;});
     });
     console.log("userdata ",this.userData);
 
@@ -55,16 +56,6 @@ export class DatosUsuarioPage {
   }
 
   selectImage(){
-   /* let options :any = {
-      maximumImagesCount:1
-    }
-    this.imagePicker.getPictures(options).then((results) => {
-      for (var i = 0; i < results.length; i++) {
-          console.log('Image URI: ' + results[i]);
-      }
-    }, (err) => { });
-
-    */
    const options = {
     maximumImagesCount: 1,
     quality: 50,

@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { PermisosUsuarioPage } from './permisos-usuario/permisos-usuario';
 import { DatosUsuarioPage } from './datos-usuario/datos-usuario';
 import { DireccionesUsuarioPage } from './direcciones-usuario/direcciones-usuario';
+import { HistorialOrdenesPage } from './historial-ordenes/historial-ordenes';
 
 
 @IonicPage()
@@ -19,6 +20,7 @@ export class ProfilePage {
   DatosUsuario = DatosUsuarioPage;
   DireccionesUsuario = DireccionesUsuarioPage;
   PermisosUsuario = PermisosUsuarioPage;
+  OrdenesUsuario = HistorialOrdenesPage;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, private http:HttpserviceProvider, private storage:Storage) {
     this.userData = this.storage.get("userData");
@@ -26,6 +28,7 @@ export class ProfilePage {
       this.storage.get('Email').then(a=>{console.log(a);this.userData.Email=a;});
       this.storage.get('Nombre').then(a=>{console.log(a);this.userData.Nombre=a;});
       this.storage.get('Foto').then(a=>{console.log(a);this.userData.Foto=a;});
+      this.storage.get('Telefono').then(a=>{console.log(a);this.userData.Telefono=a;});
     });
     console.log("userdata ",this.userData);
 

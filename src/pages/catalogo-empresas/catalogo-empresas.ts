@@ -55,6 +55,15 @@ export class CatalogoEmpresasPage {
     //this.GetEmpresas("",0, "","");
   }
   
+  doRefresh(refresher) {
+    this.storage.ready().then(()=>{
+      this.storage.get("Direccion").then(e=>{
+        this.GetEmpresas("", 0);
+        refresher.complete();
+      });
+    });
+  }
+
   EligeDireccion() {
     this.http.ListarDireccionesCliente(this.Email).subscribe(res=>{
       console.log("Respuesta de las direcciones que ya tiene el cliente: ",res);
@@ -84,7 +93,8 @@ export class CatalogoEmpresasPage {
               if (dir == undefined || dir==null || dir.Direccion.trim() ==""|| dir.Latitud.trim() ==""|| dir.Longitud.trim() ==""){
                 return false;
               }else{
-                this.storage.set("DirCliente",dir);
+                this.storage.set("Direccion",dir);
+
                 this.http.getEmpresas("",0,dir.Latitud,dir.Longitud).subscribe(res=>{
                   this.AllEmps=[];
                   if (res.empresa!=null){
@@ -180,7 +190,7 @@ export class CatalogoEmpresasPage {
   BuscarEmpresas(){
     let partnombre = $("#searchTextEmp").val();
     console.log("Buscando empresas que contengan ",partnombre);
-    if (partnombre.trim()!=""){
+    if (partnombre.toString().trim()!=""){
       this.http.BuscarEmpresas(partnombre).subscribe(ret=>{
         if(ret.empresa!=null && ret.empresa!=[]){
           if (ret.empresa.length==0){
@@ -224,17 +234,16 @@ export class CatalogoEmpresasPage {
     });
   }
 
-  GetEmpresas(rubro:string, index:number, lat : string, lng : string){
+  GetEmpresas(rubro:string, index:number){
     this.storage.ready().then(()=>{
       let dir : any;
-      this.storage.get("DirCliente").then(a=>{dir=a;
+      this.storage.get("Direccion").then(a=>{
+        dir=a;
         console.log(dir);
-        this.http.getEmpresas(rubro,0,dir.Latitud,dir.Longitud).subscribe(res=>{
-          this.AllEmps=[];
+        this.http.getEmpresas(rubro,index,dir.Latitud,dir.Longitud).subscribe(res=>{
           if (res.empresa!=null){
-            console.log("Respuesta del servidor al pedir this.empresasAll",res);
+            this.AllEmps=[];
             res.empresa.forEach(element => {
-              //console.log("Empresa:",element);
               this.AllEmps.push(element);
             });
           }

@@ -1,4 +1,67 @@
-
+// @import url("/src/theme/variables.scss");
 #AllProds{
-    margin-top: 7.1vw;
+    margin-top: 1.5pc;
+}
+
+#CategoriasList{
+    position: fixed;
+    left: 50%;
+    width: 70%;
+    padding-left: 2%;
+    z-index: 5;
+    margin-left: -35%;
+    bottom: 0;
+    border-radius: 50px 50px 0 0;
+    background-color: #e5e5e5;
+}
+
+#CategoriasList .list-item{
+    padding: 10px 0;
+    font-size: 1pc;
+    margin: 3px;
+    margin-left: -4px;
+}
+
+.hiddenCategoriasList{
+    visibility: hidden;
+}
+
+.showCategoriasList{
+    visibility: visible;
+}
+
+.ToogleCategoriasButton{
+    margin-top: 2px;
+    height: 40px;
+    width: 70px;
+    z-index: 100;
+    position: fixed;
+    right: 1%;
+}
+
+
+#searchResultProd{
+    position: fixed;
+    top: 15px;
+    left: 20%;
+    background-color: white;
+    padding: 12px;
+    width: 60%;
+    border-radius: 0px 0px 44px 44px;
+    z-index: 1;
+    padding-top: 25px;
+}
+
+.searchResultShow{
+    display:block;
+}
+
+.searchResultHidden{
+    display: none;
+}
+
+.searchResult-Item{
+    width: 90%;
+    margin-left: 5%;
+    padding: 5px 0 5px 0;
 }

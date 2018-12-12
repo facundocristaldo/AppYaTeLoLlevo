@@ -2,15 +2,60 @@ google-map {
   #FormAgregarCont {
     width: 100%;
     height: 400px;
-    margin-bottom: 5%;
+		margin-bottom: 5%;
+		
 	}
 	#map {
-		height: 100%;
-		width: 100%;
+		position: absolute;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    top: 3pc;
+    left: 0;
+    z-index: -2;
 	}
+	.CanDismiss{
+		height: 90%;
+	}
+
 	#form1Direccion{
 		width: 100%;
     font-size: large;
     padding: 5px;
 	}
+	.btn-agregar{
+		float: left;
+		position: absolute;
+		bottom: 2pc;
+		right: 1pc;
+	}
+	.MY-input-dir{
+		height: 10%;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 1%;
+	}
+}
+
+.MY-btn-success{
+	    /* border: 1px solid black; */
+			background-color: #43a247;
+			padding: .5pc;
+			/* font-weight: bold; */
+			-webkit-box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.2), 4px 4px 3px 0 rgba(0, 0, 0, 0.19);
+			box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.2), 4px 4px 3px 0 rgba(0, 0, 0, 0.19);
+			
+}
+.MY-btn-default{
+	background-color: #e0e0e0;
+	padding: .5pc;
+	/* font-weight: bold; */
+	-webkit-box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.2), 4px 4px 3px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.2), 4px 4px 3px 0 rgba(0, 0, 0, 0.19);
+	float: right;
+	position: absolute;
+	bottom: 2pc;
+	left: 1pc;
 }

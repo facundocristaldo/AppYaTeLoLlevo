@@ -4,28 +4,50 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
+
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>{{empresa.Nombre}}</ion-title>
-    <button ion-button icon-only (click)="gotoCarrito()">
-      <ion-icon name="cart"></ion-icon>
-    </button>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="toggleShow()">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="gotoCarrito()">
+        <ion-icon name="cart"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content class="default-bg" style="background-color:beige;">
+<ion-content class="ion-content">
+      <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+  
   <div class="outerbox">
+      <div id="CategoriasList" class="hiddenCategoriasList">
+          <h4>Categorias</h4>
+          <div (click)="CargarProductos(empresa.Rut)" class="list-item">Sin Filtro</div>
+          <div *ngFor="let Categoria of Categorias" (click)="CargarProductos(empresa.Rut,Categoria.Guid)" class="list-item">
+            {{Categoria.Nombre}}
+          </div>
+        </div>
     <div class="searchBar">
-      <input class="searchText" id="searchTextProd" type="text" placeholder="Buscar">
-      <ion-icon id="searchBtn" name="search"></ion-icon>
+      <input class="searchText" id="searchTextProd" type="text" [(ngModel)]="searchContent" placeholder="Buscar" (input)="BuscarProducto()">
+      <ion-icon id="searchBtn" name="search" (click)="BuscarProducto()"></ion-icon>
     </div>
+    <div id="searchResultProd" class="searchResultHidden">
+        <div>
+          <div class="searchResult-Item" *ngFor="let item of BuscoProds" (click)="ViewDetails(item)">{{item.PropProducto.Nombre}}</div>
+        </div>
+      </div>
     <div id="AllProds">
       <div class="divEmpresa" *ngFor="let prod of AllProds" (click)="ViewDetails(prod)">
-        <img *ngIf="prod.Imagenes==null" src="https://res.cloudinary.com/dnieertcs/image/upload/v1541794688/Producto-Default.jpg" alt="{{prod.Nombre}}">
-        <img *ngIf="prod.Imagenes!=null" src="{{prod.Imagenes[0]}}" title="{{prod.Nombre}}" alt="{{prod.Nombre}}">
+        <img *ngIf="prod.Imagenes==null || (prod.Imagenes!=null&&prod.Imagenes[0]==null)" src="https://res.cloudinary.com/dnieertcs/image/upload/v1541794688/Producto-Default.jpg" alt="{{prod.Nombre}}">
+        <img *ngIf="prod.Imagenes!=null &&prod.Imagenes[0]!=null" src="{{prod.Imagenes[0]}}" title="{{prod.Nombre}}" alt="{{prod.Nombre}}">
         <label class="empName">{{prod.Nombre.substring(0,10)}}...</label>
       </div>
     </div>

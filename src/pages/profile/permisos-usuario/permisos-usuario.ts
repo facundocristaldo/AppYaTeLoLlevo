@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { HttpserviceProvider } from '../../../providers/httpservice/httpservice';
 import { Storage } from '@ionic/storage';
 /**
@@ -27,7 +27,8 @@ export class PermisosUsuarioPage {
     public navParams: NavParams, 
     private http : HttpserviceProvider, 
     private storage:Storage,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private alertCtl:AlertController
     ) {
       
     }
@@ -46,6 +47,7 @@ export class PermisosUsuarioPage {
     this.http.ListarPermisos(this.userData.Email,pageNum).subscribe(response=>{
       console.log("Respuesta del servidor sobre permisos",response);
       if(response.permisos!=null){
+        this.permisos=[];
         response.permisos.forEach(element => {
           this.permisos.push(element);
         });
@@ -54,4 +56,27 @@ export class PermisosUsuarioPage {
     });
   
   }
+
+  EliminarPermiso(Rut:string){
+    this.http.EliminarPermiso(Rut,this.userData.Email).subscribe(response=>{
+      console.log("Respuesta del servidor",response);
+      if (response.status=200){
+        let alert = this.alertCtl.create({
+          title: "Éxito",
+          message: 'Los datos se actualizaron correctamente.',
+          buttons: ["Ok"]
+        });
+        alert.present();
+        this.cargarPermisos(1);
+      }else{
+        let alert = this.alertCtl.create({
+          title: "Error",
+          message: 'Algo salió mal.',
+          buttons: ["Ok"]
+        });
+        alert.present();
+      }
+    });
+  }
+
 }

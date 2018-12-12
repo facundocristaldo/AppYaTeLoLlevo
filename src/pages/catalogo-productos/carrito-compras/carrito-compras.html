@@ -6,19 +6,33 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Carrito</ion-title>
-    <button ion-button icon-only (click)="PagarCarrito()">
+    <ion-buttons end>
+      <button *ngIf="!isEmpty" ion-button icon-only (click)="PagarCarrito()">
         <ion-icon name="card"></ion-icon>
       </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
-<div>
-  <div class="divProductos">
+<ion-content padding class="ion-content">
+    <div id="MY-list">
+        <div class="MY-list-item" *ngFor="let producto of Productos" >
+          <div  class="MY-item-content">
+            <div> {{producto.Nombre}}</div>
+            <div> Cantidad: {{producto.Cantidad}}</div>
+            <div>
+              <button ion-button icon-only (click)="QuitarProductodeCarrito(producto.ObjectId)" id="MY-btn-delete">
+                <ion-icon name="trash" ></ion-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--<div>
+   <div class="divProductos">
     <div class="divproductosItem" *ngFor="let producto of Productos">
       <div>
         <p class="Nombre">{{producto.Nombre}}</p>
@@ -28,5 +42,5 @@
       </div> 
     </div>
   </div>
-</div>
+</div> -->
 </ion-content>

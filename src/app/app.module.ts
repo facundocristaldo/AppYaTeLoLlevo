@@ -25,6 +25,10 @@ import { GoogleMapComponent } from '../pages/profile/direcciones-usuario/google-
 import { ProductoDetallesPage } from '../pages/catalogo-productos/producto-detalles/producto-detalles';
 import { CarritoComprasPage } from '../pages/catalogo-productos/carrito-compras/carrito-compras';
 import { PagoCarritoPage } from '../pages/catalogo-productos/carrito-compras/pago-carrito/pago-carrito';
+import { PayPal } from '@ionic-native/paypal';
+import { HistorialOrdenesPage } from '../pages/profile/historial-ordenes/historial-ordenes';
+import { OrdenDetallesPage } from '../pages/profile/historial-ordenes/orden-detalles/orden-detalles';
+import { RatingStarsComponent } from '../components/rating-stars/rating-stars';
 
 @NgModule({
   declarations: [
@@ -41,16 +45,21 @@ import { PagoCarritoPage } from '../pages/catalogo-productos/carrito-compras/pag
     PermisosUsuarioPage,
     DatosUsuarioPage,
     CarritoComprasPage,
-    PagoCarritoPage
+    PagoCarritoPage,
+    HistorialOrdenesPage,
+    OrdenDetallesPage,
+    RatingStarsComponent
   ],
   imports: [
     BrowserModule,
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(MyApp),
     HttpClientModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    OrdenDetallesPage,
     MyApp,
     HomePage,
     RegistroPage,
@@ -63,7 +72,8 @@ import { PagoCarritoPage } from '../pages/catalogo-productos/carrito-compras/pag
     DireccionesUsuarioPage,
     PermisosUsuarioPage,
     CarritoComprasPage,
-    PagoCarritoPage
+    PagoCarritoPage,
+    HistorialOrdenesPage
   ],
   providers: [
     Facebook,
@@ -72,6 +82,7 @@ import { PagoCarritoPage } from '../pages/catalogo-productos/carrito-compras/pag
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     HttpserviceProvider,
     ImagePicker,
+    PayPal,
     Geolocation,
     
   ]

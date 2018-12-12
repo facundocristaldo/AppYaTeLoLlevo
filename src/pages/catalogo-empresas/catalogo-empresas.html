@@ -1,11 +1,15 @@
 
-<ion-header>
+<ion-header >
 
   <!-- <ion-navbar hideBackButton="true"> -->
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Empresas</ion-title>
   
     <ion-buttons end>
+      
+      <button  ion-button icon-only (click)="toggleShow()"> 
+        <ion-icon name="funnel"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="EligeDireccion()">
         <ion-icon name="navigate"></ion-icon>
       </button>
@@ -17,17 +21,20 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="ion-content">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
   <div class="outerbox">
     
-    <div id="RubrosList" class="hiddenRubrosList">
+    <div id="RubrosList" class="hiddenRubrosList" color="primary">
       <h4>Rubros</h4>
       <div (click)="GetEmpresas('',0)" class="list-item">Sin Filtro</div>
       <div *ngFor="let rubro of Rubros" (click)="GetEmpresas(rubro.Guid,0,'','')" class="list-item">
         {{rubro.Nombre}}
       </div>
     </div>
-    <button class="ToogleRubrosButton" (click)="toggleShow()">Rubros</button>
     <div class="searchBar">
       
       <input class="searchText" id="searchTextEmp" type="text" placeholder="Buscar" (input)="BuscarEmpresas()">

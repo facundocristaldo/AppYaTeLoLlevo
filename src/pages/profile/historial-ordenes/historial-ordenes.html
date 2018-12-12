@@ -1,0 +1,68 @@
+<!--
+  Generated template for the HistorialOrdenesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!-- <ion-header>  
+
+  <ion-navbar>
+    <ion-title>HistorialOrdenes</ion-title>
+  </ion-navbar>
+
+</ion-header> -->
+
+
+<ion-content padding>
+  <h3>Ordenes</h3>
+  <div id="MY-list">
+    <div class="MY-list-item" *ngFor="let orden of Ordenes" >
+      <div (click)="verOrden(orden)" class="MY-item-content">
+        <div>{{orden.FechaString}}</div>
+        <div>{{orden.NombreEmpresa}}</div>
+        <div *ngIf="orden.NombreEstado && orden.NombreEstado!='NULL'">{{orden.NombreEstado}}</div>
+        <div *ngIf="!orden.NombreEstado || orden.NombreEstado=='NULL'">No Recibida</div>
+      </div>
+        <div class="MY-item-block" *ngIf="orden.NombreEstado && orden.NombreEstado=='Resuelto' && !orden.Puntuada">
+            <rating-stars [rating]='0' [itemId]='orden.Guid' (ratingClick)='ratingComponentClick($event,orden)'></rating-stars>
+        </div>
+    </div>
+  </div>
+</ion-content>
+
+
+<!-- 
+  Activo: true
+CantidadPaquetes: 0
+Comision: 15
+Direccion: ""
+EmailCliente: "facu.cristaldo.96@gmail.com"
+FechaString: "11/12/2018 10:02"
+FormaDePago: "PayPal"
+Guid: "16aada93-efa4-4b8b-a2c2-f3e9a18f79b8"
+GuidEstado: null
+NombreEmpresa: "java"
+NombreEstado: null
+Peso: 3
+Precio: 370
+Productos: [{ObjectId: "5c0710ba1c52f60b4468b6df", GuidOrden: "16aada93-efa4-4b8b-a2c2-f3e9a18f79b8",…}]
+  0: {ObjectId: "5c0710ba1c52f60b4468b6df", GuidOrden: "16aada93-efa4-4b8b-a2c2-f3e9a18f79b8",…}
+    Cantidad: 1
+    GuidOrden: "16aada93-efa4-4b8b-a2c2-f3e9a18f79b8"
+    NombreProducto: "MacBook"
+    ObjectId: "5c0710ba1c52f60b4468b6df"
+    Peso: 0
+    Precio: 370
+    Puntos: 0
+    Puntuada: false
+    Rut: "111111111111"
+    Volumen: 0
+Puntuacion: 4
+Puntuada: null
+Rut: "111111111111"
+TimeStampOrden: "2018-12-11T10:02:25.647"
+TipoMoneda: "USD"
+TransaccionPaypal: "testing"
+Volumen: 0
+stringDate: null
+ -->

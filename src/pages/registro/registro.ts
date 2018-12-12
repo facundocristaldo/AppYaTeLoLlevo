@@ -23,6 +23,7 @@ export class RegistroPage {
   contra:string="";
   confirmcontra:string="";
   userData:any;
+  telefono:string="";
 
   constructor(
     public navCtrl: NavController, 
@@ -122,7 +123,8 @@ export class RegistroPage {
       let usuario :any = {
         Clave:this.contra,
         Nombre:this.nombre,
-        Email:this.email
+        Email:this.email,
+        Telefono:this.telefono
       };
       this.presentLoadingDefault();    
       //llama al rest de registro
@@ -156,7 +158,7 @@ export class RegistroPage {
             this.NotifyAlert("Validacion",ret.message);
           }else{
             console.log("NO registró");
-            this.NotifyAlert("Usuario no existe",ret.message);
+            this.NotifyAlert("Usuario ya existe",ret.message);
           }    
         }
       );

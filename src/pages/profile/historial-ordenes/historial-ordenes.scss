@@ -1,0 +1,29 @@
+    rating-stars *{
+        border: none;
+    }
+    #MY-list{
+        //border:1px solid black;
+    }
+    #MY-list .MY-list-item{
+        background-color: #e5f3f8;
+        webkit-box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.2), 4px 4px 3px 0 rgba(0, 0, 0, 0.19);
+        box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.2), 4px 4px 3px 0 rgba(0, 0, 0, 0.19);
+    }
+    #MY-list .MY-list-item .MY-item-content{
+        width: 100%;
+        padding: 1pc;
+        margin: 5px 0;
+        font-size: medium;
+        height: 100%;
+    }
+    #MY-list .MY-list-item .MY-item-content div{
+        display: inline-block;
+        width: 32%;
+        vertical-align: middle;
+        text-align: center;
+    }
+    #MY-list .MY-list-item .MY-item-block{
+        display: block;
+        margin: -35px 27% 0 27%;
+        width: 140px;
+    }
